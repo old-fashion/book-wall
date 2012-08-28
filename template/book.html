@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Bootstrap, from Twitter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/assets/fancybox/source/jquery.fancybox.css" rel="stylesheet">
+    <link href="/assets/fancybox/source/helpers/jquery.fancybox-buttons.css" rel="stylesheet">
+    <link href="/assets/fancybox/source/helpers/jquery.fancybox-thumbs.css" rel="stylesheet">
+    <style>
+    body {
+      margin: 20px;
+    }
+    .fancybox-outer {
+      background-color: #202020;
+    }
+    a:hover {text-decoration:none;}
+    </style>
+
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="page-header">
+      {% if book.parse_error %}
+      <h2>{{ book.uid }} &nbsp;&nbsp;<small>Page Error</small></h2>
+      {% else %}
+      <h2>{{ book.title }} &nbsp;&nbsp;<small>{{ book.photographer }}</small></h2>
+      {% endif %}
+      </div>
+      <div class="row">
+        {% if book.parse_error %}
+        <div class="span12">
+        <pre class="linenums">{{ book.desc }}</pre>
+        {% for link in book.links %}
+        <div class="well"><a href="{{ link }}">{{ link }}</a></div>
+        {% endfor %}
+        <a class="btn btn-primary" href="book/{{ book.uid }}?force=True">Force Update</a>
+        </div>
+        {% else %}
+        <div class="span5">
+          {% if book.cover_url %}
+          <img src="{{ book.cover_url }}" style="border:1px solid lightgrey;">
+          {% endif %}
+        </div>
+        <div class="span7">
+          <table class="table table-condensed">
+          <tr><td><h6>Subtitle</h6></td><td>{{ book.sub_title|default_if_none:"-" }}</td></tr>
+          <tr><td><h6>Author</h6></td><td>{{ book.author|join:", " }}</td></tr>
+          <tr><td><h6>Publisher</h6></td><td>{{ book.publisher }}</td></tr>
+          <tr><td><h6>Year</h6></td><td>{{ book.year }}</td></tr>
+          <tr><td><h6>Pages</h6></td><td>{{ book.pages }}</td></tr>
+          <tr><td><h6>Dimensions</h6></td><td>{{ book.width }} x {{ book.height }}{% if book.thickness %} x {{ book.thickness }}{% endif %} mm</td></tr>
+          <tr><td><h6>Weight</h6></td><td>{% if book.thickness %}{{ book.weight|floatformat:1 }} kg{% else %}-{% endif %}</td></tr>
+          <tr><td><h6>Extent</h6></td><td>{{ book.extent|default_if_none:"-" }}</td></tr>
+          <tr><td><h6>Plates</h6></td><td>{{ book.plates|default_if_none:"-" }}</td></tr>
+          <tr><td><h6>Language</h6></td><td>{{ book.language|default_if_none:"-"  }}</td></tr>
+          <tr><td><h6>Retail Price</h6></td><td>{{ book.price|default_if_none:"-" }}</td></tr>
+          <tr><td><h6>ISBN-10</h6></td><td>{{ book.isbn10|default_if_none:"-" }}</td></tr>
+          <tr><td><h6>ISBN-13</h6></td><td>{{ book.isbn13|default_if_none:"-" }}</td></tr>
+          <tr><td><h6>UID</h6></td><td>{{ book.uid|default_if_none:"-" }}</td></tr>
+          </table>
+          <table class="table table-condensed">
+          <tr><td><h6>Publisher's Description</h6></td></tr>
+          <tr><td>{{ book.desc|safe }}</td></tr>
+          {% for link in book.links %}
+          <tr><td><a href="{{ link }}">{{ link }}</a></td></tr>
+          {% endfor %}
+          <tr><td></td></tr>
+          </table>
+          {% if admin %}
+          <div class="well">
+          <a class="btn btn-primary" href="/error/{{ book.uid }}">Error Item</a>
+          <a class="btn btn-primary" href="/book/{{ book.uid }}?force=True">Force Update</a>
+          </div>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+      <br>
+      <br>
+      <div class="row">
+        <div class="span12">
+          {% if book.has_preview %}
+          <div class="page-header">
+          <h3>Previews</h3>
+          </div>
+          <ul class="thumbnails">
+            <div style="display:none;">
+            <a href="{{ book.previews|first }}" class="thumbnail fancybox" rel="fancybox-thumb">
+            <img src="{{ book.previews|first }}">
+            </a>
+            </div>
+            {% for preview in book.previews|slice:"1:" %}
+              {% if forloop.counter0|divisibleby:"4" %}
+          </ul>
+          <ul class="thumbnails">
+          
+              {% endif %}
+              <li class="span3">
+              <a href="{{ preview }}" class="thumbnail fancybox" rel="fancybox-thumb">
+              <img src="{{ preview }}">
+              </a>
+              </li>
+              {% if forloop.counter|divisibleby:"4" %}
+          </ul>
+              {% endif %}
+            {% endfor %}
+         {% endif %}
+        </div>
+      </div>
+      <div class="row">
+        <div class="span12">
+          <div class="page-header">
+          <h3>Cover</h3>
+          </div>
+          <ul class="thumbnails">
+              <li class="span2">
+              <a href="{{ preview }}" class="thumbnail fancybox" rel="fancybox-cover">
+              <img src="/cover/thumbnail/{{ book.uid }}">
+              </a>
+              </li>
+          </ul>
+        </div>
+      </div>
+
+      
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/fancybox/source/jquery.fancybox.pack.js"></script>
+    <script src="/assets/fancybox/source/helpers/jquery.fancybox-buttons.js"></script>
+    <script src="/assets/fancybox/source/helpers/jquery.fancybox-thumbs.js"></script>
+    <script>
+      $(document).ready(function() {
+        $(".fancybox").fancybox({
+        padding     : 0,
+        closeBtn    : false,
+        arrows      : false,
+        loop        : false,
+        autoPlay    : true,
+        prevEffect  : 'fade',
+        nextEffect  : 'fade',
+        helpers : {
+            title   : {
+                type: 'outside'
+            },
+            overlay : {
+                opacity : 0.7,
+                css : {
+                    'background-color' : '#000'
+                }
+            },
+            thumbs  : {
+                width   : 50,
+                height  : 50
+            }
+        }
+        });
+      });
+    </script>
+ </body>
+</html>
+

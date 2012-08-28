@@ -1,0 +1,8 @@
+DQ890: Many authors
+MW103: publisher name has ',' -> 'Fotohof Editions, Salzburg'
+ZC716: description has '<BR>'
+AA001: no illustrate number
+HO001: no cover image
+IB060: unicode error
+
+AB336: has sub title

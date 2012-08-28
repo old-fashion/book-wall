@@ -1,0 +1,4 @@
+cron:
+- description: weekly update job
+  url: /updated
+  schedule: every friday 03:00

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Bootstrap, from Twitter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/assets/fancybox/source/jquery.fancybox.css" rel="stylesheet">
+    <link href="/assets/fancybox/source/helpers/jquery.fancybox-buttons.css" rel="stylesheet">
+    <link href="/assets/fancybox/source/helpers/jquery.fancybox-thumbs.css" rel="stylesheet">
+    <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    .fancybox-outer {
+      background-color: #202020;
+    }
+    a:hover {text-decoration:none;}
+
+    .list-index
+    {
+      color:darkgray;
+      font-family:sans-serif;
+      font-size:14px;
+      border-bottom:1px dotted red;
+      width:700px;
+      margin:15px 5px 5px 0px;
+      padding:1px;
+      text-align:right;
+      vertical-align:top;
+    }
+    .list-head
+    {
+      color:#505050;
+      font-family:sans-serif;
+      font-size:16px;
+      font-weight:bold;
+
+      border-bottom:1px solid red;
+      width:400px;
+      margin:15px 5px 5px 0px;
+      padding:1px;
+      text-align:right;
+      vertical-align:top;
+    }
+
+    .book
+    {
+      margin: 3px;
+      border: 1px solid #FFFFFF;
+      height: 210px;
+      max-height: 215px;
+      width: 145px;
+      float: left;
+      text-align: center;
+      overflow: hidden;
+    }
+    .book img
+    {
+      display: inline;
+      margin: 3px;
+      border: 1px solid #dddddd;
+    }
+    .book a:hover img
+    {
+      border: 1px solid red;
+    }
+    .title
+    {
+      font-family:sans-serif;
+      font-size: 11px;
+      font-weight: bold;
+      color: #404040;
+      text-align: center;
+      margin: 1px;
+    }
+    .author
+    {
+      font-family:sans-serif;
+      font-size: 10px;
+      color: #808080;
+      text-align: center;
+      font-weight: normal;
+      margin: 1px;
+    }
+
+    a.redline:link
+    {
+      color:darkgray;
+      padding:1px;
+      text-decoration:none;
+    }
+    a.redline:visited
+    {
+      color:darkgray;
+      padding:1px;
+      text-decoration:none;
+    }
+    a.redline:hover
+    {
+      color:black;
+      text-decoration:none;
+      padding:1px;
+      border-bottom:3px solid red;
+    }
+
+    </style>
+
+  </head>
+
+  <body>
+    <div class="list-index">
+      <a class="redline" href="index/title_0.html">0&nbsp;</a>
+      <a class="redline" href="index/title_0.html">A&nbsp;</a>
+    </div>
+    <div>
+      {% for book in books %}
+      <div class="book">
+        <a href="/book/{{ book.uid }}"><img src="/cover/thumbnail/{{ book.uid }}"></a>
+        <div class=title>{{ book.title }}</div>
+        <div class=author>{{ book.author }}</div>
+      </div>
+      {% endfor %}
+    </div> 
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/fancybox/source/jquery.fancybox.pack.js"></script>
+    <script src="/assets/fancybox/source/helpers/jquery.fancybox-buttons.js"></script>
+    <script src="/assets/fancybox/source/helpers/jquery.fancybox-thumbs.js"></script>
+    <script>
+      $(document).ready(function() {
+        $(".fancybox").fancybox({
+        padding     : 0,
+        closeBtn    : false,
+        arrows      : false,
+        loop        : false,
+        autoPlay    : true,
+        prevEffect  : 'fade',
+        nextEffect  : 'fade',
+        helpers : {
+            title   : {
+                type: 'outside'
+            },
+            overlay : {
+                opacity : 0.7,
+                css : {
+                    'background-color' : '#000'
+                }
+            },
+            thumbs  : {
+                width   : 50,
+                height  : 50
+            }
+        }
+        });
+      });
+    </script>
+ </body>
+</html>
+
